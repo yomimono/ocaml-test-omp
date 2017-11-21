@@ -1,30 +1,13 @@
-(**************************************************************************)
-(*                                                                        *)
-(*                                 OCaml                                  *)
-(*                                                                        *)
-(*             Xavier Leroy, projet Cristal, INRIA Rocquencourt           *)
-(*                                                                        *)
-(*   Copyright 1996 Institut National de Recherche en Informatique et     *)
-(*     en Automatique.                                                    *)
-(*                                                                        *)
-(*   All rights reserved.  This file is distributed under the terms of    *)
-(*   the GNU Lesser General Public License version 2.1, with the          *)
-(*   special exception on linking described in the file LICENSE.          *)
-(*                                                                        *)
-(**************************************************************************)
-
-(** Abstract syntax tree produced by parsing *)
-
 module Lexing = struct
   include Lexing
   type p = [%import: Lexing.position] [@@deriving crowbar]
-  let generate_position = generate_p
+  let position_to_crowbar = p_to_crowbar
 end
 
 module Location = struct
   include Location
   type p = [%import: Location.t] [@@deriving crowbar]
-  let generate = generate_p
+  let to_crowbar = p_to_crowbar
 end
 
 module Asttypes = struct
@@ -40,23 +23,23 @@ module Asttypes = struct
   type private_flag_ = [%import: Asttypes.private_flag] [@@deriving crowbar]
   type mutable_flag_ = [%import: Asttypes.mutable_flag] [@@deriving crowbar]
   type virtual_flag_ = [%import: Asttypes.virtual_flag] [@@deriving crowbar]
-  let generate_loc = generate_l
-  let generate_arg_label = generate_arg_label_
-  let generate_closed_flag = generate_closed_flag_
-  let generate_label = generate_label_
-  let generate_rec_flag = generate_rec_flag_
-  let generate_direction_flag = generate_direction_flag_
-  let generate_override_flag = generate_override_flag_
-  let generate_variance = generate_variance_
-  let generate_private_flag = generate_private_flag_
-  let generate_mutable_flag = generate_mutable_flag_
-  let generate_virtual_flag = generate_virtual_flag_
+  let loc_to_crowbar = l_to_crowbar
+  let arg_label_to_crowbar = arg_label__to_crowbar
+  let closed_flag_to_crowbar = closed_flag__to_crowbar
+  let label_to_crowbar = label__to_crowbar
+  let rec_flag_to_crowbar = rec_flag__to_crowbar
+  let direction_flag_to_crowbar = direction_flag__to_crowbar
+  let override_flag_to_crowbar = override_flag__to_crowbar
+  let variance_to_crowbar = variance__to_crowbar
+  let private_flag_to_crowbar = private_flag__to_crowbar
+  let mutable_flag_to_crowbar = mutable_flag__to_crowbar
+  let virtual_flag_to_crowbar = virtual_flag__to_crowbar
 end
 
 module Longident = struct
   include Longident
   type q = [%import: Longident.t] [@@deriving crowbar]
-  let generate = generate_q
+  let to_crowbar = q_to_crowbar
 end
 
 open Asttypes
@@ -125,6 +108,6 @@ and directive_argument = [%import: Parsetree.directive_argument]
 [@@deriving crowbar]
 
 let () =
-  Crowbar.(add_test ~name:"expression" [generate_expression]
+  Crowbar.(add_test ~name:"expression" [expression_to_crowbar]
              (fun expression -> check_eq ~pp:(Printast.expression 0)
                  expression expression))
