@@ -1,0 +1,4 @@
+true: warn(@5@8@10@11@12@14@23@24@26@29@40), bin_annot, safe_string
+
+"test": include
+<test/*>: debug, package(compiler-libs), package(ocaml-migrate-parsetree), package(ppx_import), package(ppx_deriving_crowbar), package(crowbar)

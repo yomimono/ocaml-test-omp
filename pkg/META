@@ -1,0 +1,6 @@
+version = "%{version}%"
+description = "test ocaml-migrate-parsetree"
+requires = "ppx_import crowbar compiler-libs ocaml-migrate-parsetree ppx_deriving_crowbar"
+archive(native) = "test_parsetree.cmxa"
+archive(native, plugin) = "test_parsetree.cmxs"
+exists-if = "test_parsetree.cma"
